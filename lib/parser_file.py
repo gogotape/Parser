@@ -1,16 +1,20 @@
 import re
+
+"""
 import numpy
 import pandas
+E:/code/Parser_project/input_data/test_schedule.inc
+'W1' 10 10 1 3 OPEN 1* 1 2 1 3* 1.0 /
+"""
 
-
-input_f = input('Введите абсолютный путь к .inc файлу')
-
+input_f = input('Введите абсолютный путь к .inc файлу: ')
 
 try:
-    with open (input_f, 'r', encoding="utf-8") as f:
-        print(f.read())
+    f = open(input_f, 'r', encoding="utf-8")
 except:
     print('There is no such file in this directory')
+
+a = open('file.txt', 'w', encoding="utf-8")
 
 
 def transform_schedule(keywords, parameters, input_file, output_file):
@@ -26,7 +30,13 @@ def inspect_schedule():
 
 
 def clean_schedule():
-    pass
+    for i in f.readlines():
+        if re.findall(r'\w+|/', i):
+            i = re.sub(r'--.*', '', i)
+            if not re.findall(r'\w+|/', i):
+                pass
+            else:
+                a.write(i)
 
 
 def parse_schedule():
@@ -46,16 +56,37 @@ def parse_keyword_block():
 
 
 def parse_keyword_DATE_line():
-    pass
+    string = input('Введите строку для обработки (DATE): ')
+    out = string.split(' ')
+    print(*out[:-1])
 
 
-def parse_keyword_COMPTDAT_line():
-    pass
+def parse_keyword_COMPDAT_line():
+    string = input('Введите строку для обработки (COMPDAT): ')
+    out = string.split(' ')
+    print(out[:-1])
 
 
-def parse_keyword_COMPTDATL_line():
-    pass
+def parse_keyword_COMPDATL_line():
+    string = input('Введите строку для обработки (COMPDATL): ')
+    out = string.split(' ')
+    print(out[:-1])
 
 
 def result_to_csv():
     pass
+
+
+clean_schedule()
+
+a.close()
+a = open('file.txt', encoding="utf-8")
+
+parse_keyword_DATE_line()
+'''
+parse_keyword_COMPDAT_line()
+parse_keyword_COMPDATL_line()
+'''
+
+a.close()
+print('finish')
